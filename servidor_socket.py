@@ -43,7 +43,7 @@ def servidor_socket():
 			 if not dados:
 				 break
 			 arq_cifrado.write(dados)
-			 print("DADOS Recebidos: %s",dados)
+			 print("DADOS Recebidos: %s" %dados)
 			 for i in dados:
 				 arq_desifrado.write(cesar_inverso(i,4))
 
