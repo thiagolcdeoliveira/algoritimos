@@ -35,7 +35,7 @@ def enviar_arquivo(caminho, host):
 	arq = open(caminho, 'r')
 
 	for i in arq.readlines():
-		s.send(cesar_inverso(i))
+		s.send(i)
 	 
 	arq.close()
 	s.close()

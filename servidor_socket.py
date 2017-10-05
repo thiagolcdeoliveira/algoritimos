@@ -23,6 +23,7 @@
 #  
 #serv_sock.py
 import socket
+from cesar import *
 def servidor_socket(): 
 	HOST = ''
 	PORT = 57000
@@ -33,15 +34,20 @@ def servidor_socket():
 		s.listen(1)
 		 
 		conn, addr = s.accept()
-		arq = open('arquivos/recebidos/arquivo_cifrado.txt', 'w')
+		arq_cifrado = open('arquivos/recebidos/arquivo_cifrado.txt', 'w')
+		arq_desifrado = open('arquivos/recebidos/arquivo_desifrado.txt', 'w')
 
 		while 1:
 			 dados = conn.recv(1024)
 			 if not dados:
 				 break
-			 arq.write(dados)
+			 arq_cifrado.write(dados)
+			 for i in dados:
+				 print(i)
+				 arq_desifrado.write(cesar_inverso(i,4))
 
-		arq.close()
+		arq_cifrado.close()
+		arq_desifrado.close()
 	#conn.close()
 def main(args):
 	servidor_socket()
