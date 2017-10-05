@@ -42,8 +42,8 @@ def servidor_socket():
 			 if not dados:
 				 break
 			 arq_cifrado.write(dados)
+			 print(dados)
 			 for i in dados:
-				 print(i)
 				 arq_desifrado.write(cesar_inverso(i,4))
 
 		arq_cifrado.close()
