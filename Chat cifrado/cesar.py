@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  cliente_socket.py
+#  bla.py
 #  
 #  Copyright 2017 Unknown <thiago@thiago-PC>
 #  
@@ -21,39 +21,32 @@
 #  MA 02110-1301, USA.
 #  
 #  
-#serv_sock.py
-import socket
-from cesar import *
-import os
-def servidor_socket(): 
-	HOST = ''
-	PORT = 57000
-	 
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.bind((HOST, PORT))
-	while True:
-		s.listen(1)
-		 
-		conn, addr = s.accept()
-		arq_cifrado = open('arquivos/recebidos/arquivo_cifrado.txt', 'w')
-		arq_desifrado = open('arquivos/recebidos/arquivo_desifrado.txt', 'w')
+import unittest
 
-		while 1:
-			 dados = conn.recv(1024)
-			 if not dados:
-				 break
-			 arq_cifrado.write(dados)
-			 print("DADOS Recebidos: %s" %dados)
-			 for i in dados:
-				 arq_desifrado.write(cesar_inverso(i,4))
+def cesar(texto, casas):
+	
+	return "".join([chr(ord(letra) + casas %126) for letra in texto]) 
+	
+def cesar_inverso(texto,casas):	
+    return "".join([chr(ord(letra) - casas %126) for letra in texto]) 
 
-		arq_cifrado.close()
-		arq_desifrado.close()
-	#conn.close()
+class Test(unittest.TestCase):
+
+    def test_cifrar(self):
+        self.assertEqual(cesar("texto",3), 'wh{wr')
+        self.assertEqual(cesar("texto",4), 'xi|xs')
+
+    def test_desifrar(self):
+        self.assertEqual(cesar_inverso("wh{wr",3), 'texto')
+        self.assertEqual(cesar_inverso("xi|xs",4), 'texto')
+        
+    
+
 def main(args):
-	servidor_socket()
+
 	return 0
 
 if __name__ == '__main__':
     import sys
+    unittest.main()
     sys.exit(main(sys.argv))

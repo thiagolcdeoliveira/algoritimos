@@ -25,30 +25,42 @@
 import socket
 from cesar import *
 import os
+from cliente_socket import *
 def servidor_socket(): 
 	HOST = ''
 	PORT = 57000
-	 
+	chave =4
+	print("aqui")
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.bind((HOST, PORT))
+	print("dpois")
+	mensagem_desifrada = []
+	mensagem_cifrada = []
+	texto=raw_input("Digite o texto:")
+	host=raw_input("Digite o Host:")
+	for c in texto:
+	    mensagem_cifrada.append(cesar(c,chave))
+	    enviar_mensagem(texto, host)
 	while True:
 		s.listen(1)
 		 
 		conn, addr = s.accept()
-		arq_cifrado = open('arquivos/recebidos/arquivo_cifrado.txt', 'w')
-		arq_desifrado = open('arquivos/recebidos/arquivo_desifrado.txt', 'w')
+		
 
 		while 1:
 			 dados = conn.recv(1024)
 			 if not dados:
 				 break
-			 arq_cifrado.write(dados)
 			 print("DADOS Recebidos: %s" %dados)
 			 for i in dados:
-				 arq_desifrado.write(cesar_inverso(i,4))
-
-		arq_cifrado.close()
-		arq_desifrado.close()
+				 mensagem_desifrada.append(cesar_inverso(i,4))
+			 print("DADOS Recebidos Desifrados: %s" %"".join(arq_desifrado))
+			 texto=raw_input("Digite o texto:")
+			 host=raw_input("Digite o Host:")
+			 for c in texto:
+				 mensagem_cifrada.append(cesar(c,chave))
+			 enviar_mensagem(texto, host)
+ 
 	#conn.close()
 def main(args):
 	servidor_socket()

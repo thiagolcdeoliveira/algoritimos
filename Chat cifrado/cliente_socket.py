@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -21,37 +22,27 @@
 #  MA 02110-1301, USA.
 #  
 #  
-#serv_sock.py
+#client_sock.py
+
 import socket
 from cesar import *
-import os
-def servidor_socket(): 
-	HOST = ''
-	PORT = 57000
+def enviar_mensagem(texto, host): 
+	HOST = host #coloca o host do servidor
+	PORT = 57001
+	s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 	 
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.bind((HOST, PORT))
-	while True:
-		s.listen(1)
-		 
-		conn, addr = s.accept()
-		arq_cifrado = open('arquivos/recebidos/arquivo_cifrado.txt', 'w')
-		arq_desifrado = open('arquivos/recebidos/arquivo_desifrado.txt', 'w')
+	s.connect((HOST,PORT))
+	#arq = open(caminho, 'r')
 
-		while 1:
-			 dados = conn.recv(1024)
-			 if not dados:
-				 break
-			 arq_cifrado.write(dados)
-			 print("DADOS Recebidos: %s" %dados)
-			 for i in dados:
-				 arq_desifrado.write(cesar_inverso(i,4))
+	for i in texto:
+		s.send(i)
+	 
+	arq.close()
+	s.close()
 
-		arq_cifrado.close()
-		arq_desifrado.close()
-	#conn.close()
 def main(args):
-	servidor_socket()
+	#enviar_arquivo("arquivo_cifrado.txt")
+	#enviar_arquivo("arquivos/gerados/arquivo_cifrado.txt")
 	return 0
 
 if __name__ == '__main__':
