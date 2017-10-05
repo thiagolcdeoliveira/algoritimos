@@ -24,6 +24,7 @@
 #serv_sock.py
 import socket
 from cesar import *
+import os
 def servidor_socket(): 
 	HOST = ''
 	PORT = 57000
@@ -42,7 +43,7 @@ def servidor_socket():
 			 if not dados:
 				 break
 			 arq_cifrado.write(dados)
-			 print(dados)
+			 print("DADOS Recebidos: %s",dados)
 			 for i in dados:
 				 arq_desifrado.write(cesar_inverso(i,4))
 
