@@ -25,8 +25,9 @@
 #client_sock.py
 
 import socket
-def enviar_arquivo(caminho): 
-	HOST = 'localhost' #coloca o host do servidor
+from cesar import *
+def enviar_arquivo(caminho, host): 
+	HOST = host #coloca o host do servidor
 	PORT = 57000
 	s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 	 
@@ -34,7 +35,7 @@ def enviar_arquivo(caminho):
 	arq = open(caminho, 'r')
 
 	for i in arq.readlines():
-		s.send(i)
+		s.send(cesar_inverso(i))
 	 
 	arq.close()
 	s.close()
