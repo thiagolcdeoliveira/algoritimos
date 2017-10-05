@@ -26,15 +26,15 @@
 
 import socket
 from cesar import *
-def enviar_arquivo(caminho, host): 
+def enviar_mensagem(texto, host): 
 	HOST = host #coloca o host do servidor
-	PORT = 57000
+	PORT = 57001
 	s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 	 
 	s.connect((HOST,PORT))
-	arq = open(caminho, 'r')
+	#arq = open(caminho, 'r')
 
-	for i in arq.readlines():
+	for i in texto:
 		s.send(i)
 	 
 	arq.close()
